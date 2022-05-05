@@ -16,7 +16,7 @@
 </head>
 <body>
 	<h1>대여 상세 검색</h1>
-	<form action="<%=request.getContextPath()%>/rentalSearchAction.jsp" mehthod="post">
+	<form action="<%=request.getContextPath()%>/rentalSearchController" method="post">
 		<table class="table table-hover">
 			<tr>
 				<td>스토어 ID</td>

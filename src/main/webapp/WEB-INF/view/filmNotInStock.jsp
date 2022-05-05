@@ -3,23 +3,11 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	int filmId= 0;
-	int storeId=0;
-	
-	if(request.getParameter("filmId")!=null && request.getParameter("storeId")!=null){
-		 filmId= Integer.parseInt(request.getParameter("filmId"));
-		 storeId=Integer.parseInt(request.getParameter("storeId"));
-	}
-	
-	Map<String,Object> map = new HashMap<String,Object>();
-	List<Integer> list = new ArrayList<Integer>();
-	
-	filmNotInStock filmnotinstock = new filmNotInStock();
-	
-	map= filmnotinstock.callFilmNot(filmId, storeId);
-	
-	list = (List<Integer>)(map.get("list"));
-	int count = (Integer)(map.get("count"));
+	int filmId=(Integer)request.getAttribute("filmId");
+	int storeId=(Integer)request.getAttribute("storeId");
+	List<Integer> list =(List<Integer>)request.getAttribute("list");
+	int count=(Integer)request.getAttribute("count");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +16,8 @@
 <title>FilmNotInStock</title>
 </head>
 <body>
-	<Form method="post" action="<%=request.getContextPath()%>/filmnotinstock.jsp">
+	<Form method="get" action="<%=request.getContextPath()%>/filmNotInStockController">
+		<h1>재고 현황</h1>
 		<table border="1">
 			<tr>
 				<td>FilmID:</td>
@@ -43,6 +32,9 @@
 					<button type="submit">검색</button>
 				 </td>
 			</tr>
+		</table>
+	</Form>
+	<table class="table table-hover">
 			<%
 			
 			if(request.getParameter("filmId")!=null && request.getParameter("storeId")!=null){
@@ -66,6 +58,5 @@
 			%>
 		</table>
 
-	</Form>
 </body>
 </html>

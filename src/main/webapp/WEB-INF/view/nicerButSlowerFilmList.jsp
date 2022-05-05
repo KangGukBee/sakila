@@ -4,27 +4,9 @@
 <%@ page import="dao.*" %>
 <%@ page import="vo.*" %>
 <%
-	List<nicerbutslowerfilmList> list = new ArrayList<>();
-	//1페이지
-	int currentPage=1;
-	if(request.getParameter("currentPage")!=null){
-		currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	}
-	int rowPerPage=10;
-	int BeginRow=(currentPage-1)*rowPerPage;
-	
-	nicerButSlowerFilmList slower = new nicerButSlowerFilmList();
-	list = nicerButSlowerFilmList.SelectByNicer(BeginRow,rowPerPage);
-	
-	//마지막 페이지
-	int lastPage=0;
-	int totalRow=slower.totalRow();
-	
-	if(totalRow%rowPerPage!=0){
-		lastPage=totalRow/rowPerPage;
-	}else{
-		lastPage+=1;
-	}
+	List<nicerbutslowerfilmList> list=(List<nicerbutslowerfilmList>)request.getAttribute("list");
+	int currentPage=(Integer)request.getAttribute("currentPage");
+	int lastPage=(Integer)request.getAttribute("lastPage");
 	
 %>
 <!DOCTYPE html>
@@ -36,7 +18,8 @@
 </head>
 <body>
 	<Form method="post">
-		<table border="1">
+		<h1>Best 판매 내역</h1>
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>FID</th>
@@ -62,8 +45,6 @@
 						<td><%=n.getLength() %></td>
 						<td><%=n.getRating() %></td>
 						<td><%=n.getActors() %></td>
-						<td></td>
-						<td></td>
 					</tr>
 				<% 
 					}
@@ -74,7 +55,7 @@
 	<%
 		if(currentPage > 1) { 
 	%>
-			<a href="<%=request.getContextPath()%>/nicerButSlowerFilmList.jsp?currentPage=<%=currentPage-1%>" class="btn btn-outline-secondary">이전</a>
+			<a href="<%=request.getContextPath()%>/nicerButSlowerFilmListController?currentPage=<%=currentPage-1%>" class="btn btn-outline-secondary">이전</a>
 	<%	
 		}
 	%>
@@ -83,7 +64,7 @@
 		
 		if(currentPage < lastPage) {
 	%>
-			<a href="<%=request.getContextPath()%>/nicerButSlowerFilmList.jsp?currentPage=<%=currentPage+1%>" class="btn btn-outline-secondary">다음</a>
+			<a href="<%=request.getContextPath()%>/nicerButSlowerFilmListController?currentPage=<%=currentPage+1%>" class="btn btn-outline-secondary">다음</a>
 	<%		
 		}
 	%>

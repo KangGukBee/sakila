@@ -55,7 +55,10 @@ public class customerInfoDao {
 			String sql="SELECT COUNT(*) cnt FROM customer_list";
 			stmt=conn.prepareStatement(sql);
 			rs=stmt.executeQuery();
-			totalRow=rs.getInt("cnt");
+			if(rs.next()) {
+				totalRow = rs.getInt("cnt");
+				System.out.println(totalRow+" <-- totalRow");
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

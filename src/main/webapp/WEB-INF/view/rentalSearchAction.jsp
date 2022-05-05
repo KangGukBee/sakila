@@ -3,34 +3,13 @@
 <%@ page import="java.util.*" %>
 <%@ page import="dao.*" %>
 <%
-	int currentPage=1; // 현재페이지
-	if(request.getParameter("currentPage") != null) {  // 이전 , 다음 버튼을 이용하여 접속
-		currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	}
-	System.out.println(currentPage+ "현재 페이지");
-	
-	int rowPerPage=1;
-	int beginRow=(currentPage-1) *rowPerPage;
-	
-	int storeId=Integer.parseInt(request.getParameter("storeId"));
-	String customerName = request.getParameter("customerName");
-	String startDate = request.getParameter("startDate");
-	String endDate = request.getParameter("endDate");
-
-
-	
-	//
-	RentalDao rentaldao= new RentalDao();
-	List<Map<String,Object>> list = rentaldao.selectReantalSearchList(beginRow,rowPerPage,storeId, customerName, startDate, endDate);
-	
-	//마지막 페이지
-	int lastPage=0;
-	int totalRow = rentaldao.totalRowDao(storeId, customerName, startDate, endDate);
-	if(totalRow % rowPerPage == 0) {
-		lastPage = totalRow / rowPerPage;
-	} else {
-		lastPage = (totalRow / rowPerPage) + 1;
-	}
+	int currentPage=(Integer)request.getAttribute("currentPage");
+	int lastPage=(Integer)request.getAttribute("lastPage");
+	List<Map<String,Object>> list = (List<Map<String,Object>>)request.getAttribute("list");
+	int storeId=(Integer)request.getAttribute("storeId");
+	String customerName=(String)request.getAttribute("customerName");
+	String startDate=(String)request.getAttribute("startDate");
+	String endDate=(String)request.getAttribute("endDate");
 	
 	
 %>

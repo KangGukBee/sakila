@@ -3,21 +3,10 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	
-	int filmId=0;
-	int storeId=0;
-	if(request.getParameter("filmId")!=null && request.getParameter("storeId")!=null){
-		 filmId= Integer.parseInt(request.getParameter("filmId"));
-		 storeId=Integer.parseInt(request.getParameter("storeId"));
-	}
-	Map<String,Object> map =new HashMap<String,Object>();
-	FilmInStock filminstock=new FilmInStock();
-	map=filminstock.filmInStockCall(filmId,storeId);
-	List<Integer> list =new ArrayList<Integer>();
-	
-	list = (List<Integer>)map.get("list");
-	
-	int count=(Integer)map.get("count");
+	int filmId=(Integer)request.getAttribute("filmId");
+	int storeId=(Integer)request.getAttribute("storeId");
+	List<Integer> list =(List<Integer>)request.getAttribute("list");
+	int count=(Integer)request.getAttribute("count");
 
 %>
 <!DOCTYPE html>
@@ -27,7 +16,7 @@
 <title>FilmInStock</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath() %>/filmInStock.jsp" method="post">
+	<form action="<%=request.getContextPath() %>/filmInStockController" method="get">
 		<h1>FilmInStock</h1>
 		<table border="1">
 			<tr>

@@ -34,6 +34,8 @@ public class ActorInfoDao {
      		}
      	}
      	return list;
+
+     	
 		
 	}
 	public int totalRowDao(){

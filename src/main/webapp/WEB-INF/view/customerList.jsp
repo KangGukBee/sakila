@@ -4,27 +4,9 @@
 <%@ page import="dao.*" %>
 <%@ page import="vo.*" %>
 <%
-	int currentPage=1; // 현재 페이지 = 1
-	if(request.getParameter("currentPage")!=null){
-		currentPage=Integer.parseInt(request.getParameter("currentPage"));
-	}
-	
-	int RowPerPage = 10; //페이지 당 데이터 수
-	int BeginRow= (currentPage-1)*RowPerPage; //데이터가 시작할 위치
-	
-	List<CustomerInfo> list= new ArrayList<>();
-	customerInfoDao customerinfodao = new customerInfoDao();
-	list= customerinfodao.SelectCustomerByListPage(BeginRow, RowPerPage);
-	//마지막 페이지 
-	int lastPage=0;
-	int totalRow=customerinfodao.totalRowDao();
-	
-	if(totalRow%RowPerPage!=0){
-		lastPage=totalRow/RowPerPage;
-	}else{
-		lastPage+=1;
-	}
-	
+	int currentPage=(Integer)request.getAttribute("currentPage");
+	int lastPage=(Integer)request.getAttribute("lastPage");
+	List<CustomerInfo> list=(List<CustomerInfo>)request.getAttribute("list");
 
 %>
 <!DOCTYPE html>
@@ -37,7 +19,8 @@
 </head>
 <body>
 	<Form method="post">
-		<table border="1">
+		<h1>고객 리스트</h1>
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -78,7 +61,7 @@
 	<%
 		if(currentPage > 1) { 
 	%>
-			<a href="<%=request.getContextPath()%>/customerList.jsp?currentPage=<%=currentPage-1%>" class="btn btn-outline-secondary">이전</a>
+			<a href="<%=request.getContextPath()%>/customerController?currentPage=<%=currentPage-1%>" class="btn btn-outline-secondary">이전</a>
 	<%	
 		}
 	%>
@@ -87,7 +70,7 @@
 		
 		if(currentPage < lastPage) {
 	%>
-			<a href="<%=request.getContextPath()%>/customerList.jsp?currentPage=<%=currentPage+1%>" class="btn btn-outline-secondary">다음</a>
+			<a href="<%=request.getContextPath()%>/customerController?currentPage=<%=currentPage+1%>" class="btn btn-outline-secondary">다음</a>
 	<%		
 		}
 	%>
