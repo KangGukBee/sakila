@@ -4,29 +4,14 @@
 <%@ page import="java.util.*" %>
 <%
 	//현재 페이지
-	int currentPage =1;
-	if(request.getParameter("currentPage")!=null){
-		currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	}
-	
-	int rowPerPage=10; // 페이지당 데이터 갯수
-	int BeginPage=(currentPage-1)*rowPerPage; // 시작 데이터 위치
-	statsDataDao statsdatadao = new statsDataDao();
-	//고객별 총액
-	List<Map<String,Object>> amountList = statsdatadao.amountByCustomer(BeginPage,rowPerPage);
+	int currentPage =(Integer)request.getAttribute("currentPage");
+	int lastPage=(Integer)request.getAttribute("lastPage");
+	List<Map<String,Object>> amountList = (List<Map<String,Object>>)request.getAttribute("amountList");
 	//임대료 별 영화 갯수
-	List<Map<String,Object>> rateList=statsdatadao.selectRate();
+	List<Map<String,Object>> rateList=(List<Map<String,Object>>)request.getAttribute("rateList");
 	//언어 별 영화 갯수
-	List<Map<String,Object>> languageList=statsdatadao.selectLanguage();
-	//마지막 페이지 
-	int lastPage=0;
-	int totalRow = statsdatadao.totalRowDao();
-	
-	if(totalRow%rowPerPage !=0){
-		lastPage=totalRow/rowPerPage;
-	}else{
-		lastPage+=1;
-	}
+	List<Map<String,Object>> languageList= (List<Map<String,Object>>)request.getAttribute("languageList");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -63,14 +48,14 @@
  <%
  	if(lastPage>currentPage){
  %>
- 		<a href="<%=request.getContextPath()%>/statsData.jsp?currentPage=<%=currentPage+1%>">다음</a>
+ 		<a href="<%=request.getContextPath()%>/statsDataController?currentPage=<%=currentPage+1%>">다음</a>
  <% 
  	}
  %>
   <%
  	if(currentPage>1){
  %>
- 		<a href="<%=request.getContextPath()%>/statsData.jsp?currentPage=<%=currentPage-1%>">이전</a>
+ 		<a href="<%=request.getContextPath()%>/statsDataController?currentPage=<%=currentPage-1%>">이전</a>
  <% 
  	}
  %>

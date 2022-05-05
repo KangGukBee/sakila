@@ -4,8 +4,7 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	StaffDao staffDao= new StaffDao();
-	List<Map<String,Object>> list = staffDao.selectStaffList();
+	List<Map<String,Object>> list =(List<Map<String,Object>>)request.getAttribute("list");
 %>
 
 <!DOCTYPE html>

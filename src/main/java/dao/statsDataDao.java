@@ -81,7 +81,8 @@ public class statsDataDao {
 			while(rs.next()){
 				map=new HashMap<>();
 				map.put("name",rs.getString("name"));
-				map.put("cnt", rs.getInt(rs.getInt("cnt")));
+				map.put("cnt", rs.getInt("cnt"));
+			
 				list.add(map);
 			}
 		}catch(SQLException e) {

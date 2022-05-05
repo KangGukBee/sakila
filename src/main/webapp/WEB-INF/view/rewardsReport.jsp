@@ -5,26 +5,9 @@
 <%@ page import="java.sql.*" %>
 <%
 	
-	List<Map<String,Object>> list =new ArrayList<>();
-	rewardsReportDao rewardsreportdao = new rewardsReportDao();
-	int count=0;
+	List<Map<String,Object>> list = (List<Map<String,Object>>)request.getAttribute("list");
 	
-	int purchases=0;
-	if(request.getParameter("purchases")!=null){
-		purchases=Integer.parseInt(request.getParameter("purchases"));
-	}
-	double purchased=0.00;
-	if(request.getParameter("purchased")!=null){
-		purchased=Double.parseDouble(request.getParameter("purchased"));
-	}
-	Map<String,Object> map=rewardsreportdao.reward(purchases, purchased);
-	
-	list =(List<Map<String,Object>>)map.get("list");
-	
-	if(request.getParameter("purchases")!=null && request.getParameter("purchased")!=null){	
-		count=(Integer)map.get("count");		
-	}
-	
+	int count =(Integer)request.getAttribute("count");
 	
 
 
@@ -37,7 +20,7 @@
 </head>
 <body>
 <h1>RewardsReport</h1>
-	<form method="post" action="<%=request.getContextPath() %>/rewardsReport.jsp">
+	<form method="get" action="<%=request.getContextPath() %>/rewardsReportController">
 		<table border="1">
 			<tr>
 				<td>최소 구매 횟수</td>

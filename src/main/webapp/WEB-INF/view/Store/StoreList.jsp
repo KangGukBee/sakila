@@ -15,8 +15,6 @@
 <title>Store List</title>
 </head>
 <body>
-	<a href="">index</a>
-	
 	<table>
 		<thead>
 				<tr>
